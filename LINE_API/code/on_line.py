@@ -36,13 +36,13 @@ def SwitchOn():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(SWITCH_PIN, GPIO.OUT)
     GPIO.output(SWITCH_PIN, GPIO.HIGH)
-    GPIO.cleanup()
+    # GPIO.cleanup()
 
 def SwitchoOff():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(SWITCH_PIN, GPIO.OUT)
     GPIO.output(SWITCH_PIN, GPIO.LOW)
-    GPIO.cleanup()
+    # GPIO.cleanup()
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -63,7 +63,7 @@ def message_text(event):
     text = event.message.text
 
     # テキストの内容で条件分岐
-    if text == 'on':
+    if text == 'おきて':
         # 作動
         SwitchOn()
         # 返事
@@ -71,7 +71,7 @@ def message_text(event):
             event.reply_token,
             TextSendMessage('目覚まし作動')
         )
-    elif text == 'off':
+    elif text == 'とめる':
         # 停止
         SwitchoOff()
         # 返事
@@ -83,7 +83,7 @@ def message_text(event):
         # 木霊
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=event.message.text)
+            TextSendMessage(text="指定された文字列ではありません\n[" + event.message.text + "]")
         )
 
 if __name__ == "__main__":
