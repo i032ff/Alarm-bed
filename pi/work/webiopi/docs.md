@@ -32,3 +32,5 @@ cd /etc/systemd/system/
 sudo wget https://raw.githubusercontent.com/doublebind/raspi/master/webiopi.service
 ```
 /home/kaki/work/webiopi/
+
+/etc/webopi/config
