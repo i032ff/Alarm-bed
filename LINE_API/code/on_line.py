@@ -63,7 +63,7 @@ def message_text(event):
     text = event.message.text
 
     # テキストの内容で条件分岐
-    if text == 'おきて':
+    if text == '作動':
         # 作動
         SwitchOn()
         # 返事
@@ -71,7 +71,7 @@ def message_text(event):
             event.reply_token,
             TextSendMessage('目覚まし作動')
         )
-    elif text == 'とめる':
+    elif text == '停止':
         # 停止
         SwitchoOff()
         # 返事
