@@ -1,3 +1,6 @@
+https://dev.classmethod.jp/articles/webiopi-raspberry-pi-gpio-operation/
+
+https://dev.classmethod.jp/articles/python-script-in-raspberry-pi/
 
 WebIOPiのダウンロード
 ```
