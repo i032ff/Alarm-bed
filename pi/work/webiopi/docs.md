@@ -33,4 +33,9 @@ sudo wget https://raw.githubusercontent.com/doublebind/raspi/master/webiopi.serv
 ```
 /home/kaki/work/webiopi/
 
-/etc/webopi/config
+/etc/webiopi/config
+
+起動
+```
+sudo systemctl start webiopi
+```
