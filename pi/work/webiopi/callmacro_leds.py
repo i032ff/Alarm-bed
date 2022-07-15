@@ -19,7 +19,7 @@ def setup():
  
 def loop():
     # 現在時刻を取得
-    now = datetime.time(datetime.datetime.now().hour, datetime.datetime.now().minute)
+    now = datetime.datetime.now()
  
     # 自動点灯
     if ((now.hour == HOUR_ON.hour) and (now.minute == HOUR_ON.minute) and (now.second == 0)):
