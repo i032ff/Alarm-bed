@@ -32,17 +32,20 @@ handler = WebhookHandler(channel_secret)
 # スイッチON・OFF関数の登録
 SWITCH_PIN = 23
 
+
 def SwitchOn():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(SWITCH_PIN, GPIO.OUT)
     GPIO.output(SWITCH_PIN, GPIO.HIGH)
     # GPIO.cleanup()
 
+
 def SwitchoOff():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(SWITCH_PIN, GPIO.OUT)
     GPIO.output(SWITCH_PIN, GPIO.LOW)
     # GPIO.cleanup()
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -57,6 +60,7 @@ def callback():
         abort(400)
 
     return 'OK'
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def message_text(event):
@@ -79,12 +83,20 @@ def message_text(event):
             event.reply_token,
             TextSendMessage('目覚まし停止')
         )
+    elif text == '設定':
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage('目覚まし停止')
+        )
+
     else:
         # 木霊
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="指定された文字列ではありません\n[" + event.message.text + "]")
+            TextSendMessage(
+                text="指定された文字列ではありません\n[" + event.message.text + "]")
         )
+
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
