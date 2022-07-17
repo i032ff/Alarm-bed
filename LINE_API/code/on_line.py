@@ -50,8 +50,8 @@ def watcher(d):
                     temp = db[key]
                     item = temp.pop(0)                          
                     db[key] = temp
-                    print("Alarm menyala")
-                    line_bot_api.push_message(key, TextSendMessage(text='Alarm menyala !'))
+                    print('設定時間になりました!')
+                    line_bot_api.push_message(key, TextSendMessage(text='設定時間になりました!'))
         except Exception as e:
             print(e)
         time.sleep(3)
@@ -90,39 +90,39 @@ def callback():
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def message_text(event):
-    text = event.message.text
+# def message_text(event):
+#     text = event.message.text
 
-    # テキストの内容で条件分岐
-    if text == '作動':
-        # 作動
-        SwitchOn()
-        # 返事
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage('目覚まし作動')
-        )
-    elif text == '停止':
-        # 停止
-        SwitchoOff()
-        # 返事
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage('目覚まし停止')
-        )
-    elif text == '設定':
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage('目覚まし停止')
-        )
+#     # テキストの内容で条件分岐
+#     if text == '作動':
+#         # 作動
+#         SwitchOn()
+#         # 返事
+#         line_bot_api.reply_message(
+#             event.reply_token,
+#             TextSendMessage('目覚まし作動')
+#         )
+#     elif text == '停止':
+#         # 停止
+#         SwitchoOff()
+#         # 返事
+#         line_bot_api.reply_message(
+#             event.reply_token,
+#             TextSendMessage('目覚まし停止')
+#         )
+#     elif text == '設定':
+#         line_bot_api.reply_message(
+#             event.reply_token,
+#             TextSendMessage('目覚まし停止')
+#         )
 
-    else:
-        # 木霊
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="指定された文字列ではありません\n[" + event.message.text + "]")
-        )
+#     else:
+#         # 木霊
+#         line_bot_api.reply_message(
+#             event.reply_token,
+#             TextSendMessage(
+#                 text="指定された文字列ではありません\n[" + event.message.text + "]")
+#         )
 
 def handle_text_message(event):
     text = event.message.text #message from user
@@ -145,7 +145,7 @@ def handle_text_message(event):
                 if len(inp_time) == 2:         
                     minute=int(inp_time[1])
                 time_set = dt.now().replace(hour=hour,minute=minute,second=0)
-                reply = "Alarm telah berhasil di set"
+                reply = f'time{hour},{minute}'
             except Exception:
                 reply = "Jam hanya bisa dari 00-23 dan menit hanya bisa dari 00-59"
         elif in_length == 3:
@@ -172,7 +172,9 @@ def handle_text_message(event):
                 db[inp[0]] = []
             if (time_set - dt.now()).total_seconds() > 0:
                 db[inp[0]] = db[inp[0]] + [time_set]
-                reply = "Alarm telah berhasil di set"            
+                print(time_set)
+                alerm_time = time_set.strftime('%Y/%m/%d %H:%M')
+                reply = f'{alerm_time} にアラームが設定されました'
             else:
                 reply = "Alarm tidak berhasil di set karena waktu nya lampau"
     except ValueError:
