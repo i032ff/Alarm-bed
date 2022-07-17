@@ -1,6 +1,13 @@
 import RPi.GPIO as GPIO
 import os
 import sys
+from multiprocessing import Process, Manager
+import time, asyncio
+from datetime import datetime as dt, time as t
+# encoding: utf-8
+import requests
+import json
+import jsonpickle
 from argparse import ArgumentParser
 
 from flask import Flask, request, abort
@@ -40,6 +47,29 @@ handler = WebhookHandler(channel_secret)
 # スイッチON・OFF関数の登録
 SWITCH_PIN = 23
 
+m = Manager()
+db = m.dict()
+
+def watcher(d):
+    while True:
+        try:
+            for key, value in d.items() :
+                future = [date - dt.now() for date in value]
+                future.sort()
+
+                if (len(future) > 0 and future[0].total_seconds()) < 0:
+                    temp = db[key]
+                    item = temp.pop(0)                          
+                    db[key] = temp
+                    print("Alarm menyala")
+                    line_bot_api.push_message(key, TextSendMessage(text='Alarm menyala !'))
+        except Exception as e:
+            print(e)
+        time.sleep(3)
+
+
+p = Process(name='p1', target=watcher, args=(db, ))
+p.start()
 
 def SwitchOn():
     GPIO.setmode(GPIO.BCM)
@@ -104,6 +134,61 @@ def message_text(event):
             TextSendMessage(
                 text="指定された文字列ではありません\n[" + event.message.text + "]")
         )
+
+def handle_text_message(event):
+    text = event.message.text #message from user
+    reply = ""
+    print(event)
+    print(event.message)
+    print(dir(event.source))
+    print(vars(event.source))
+    inp = text.split(" ")   
+    inp.insert(0,event.source.user_id)
+    print(inp)    
+    try:
+        time_set = None
+        in_length = len(inp)
+        if in_length == 2:
+            inp_time = inp[1].split(":")
+            try:
+                hour = int(inp_time[0])
+                minute = 0
+                if len(inp_time) == 2:         
+                    minute=int(inp_time[1])
+                time_set = dt.now().replace(hour=hour,minute=minute,second=0)
+                reply = "Alarm telah berhasil di set"
+            except Exception:
+                reply = "Jam hanya bisa dari 00-23 dan menit hanya bisa dari 00-59"
+        elif in_length == 3:
+            inp_date = inp[1].split("-")
+            inp_time = inp[2].split(":")
+            try:
+                day = int(inp_date[0])
+                month = int(inp_date[1])
+                year = int(inp_date[2])
+                hour = int(inp_time[0])
+                minute = 0
+                if len(inp_time) == 2:         
+                    minute=int(inp_time[1])
+                time_set = dt(year=year,month=month,day=day,hour=hour,minute=minute)
+            except Exception:
+                reply = "Format waktunya dd-mm-yyy, jam hanya bisa dari 00-23, dan menit hanya bisa dari 00-59"
+        else:
+            reply = "Kurang tanggal dan/ jam"
+        
+        if time_set is not None:    
+            try:
+                db[inp[0]]
+            except:
+                db[inp[0]] = []
+            if (time_set - dt.now()).total_seconds() > 0:
+                db[inp[0]] = db[inp[0]] + [time_set]
+                reply = "Alarm telah berhasil di set"            
+            else:
+                reply = "Alarm tidak berhasil di set karena waktu nya lampau"
+    except ValueError:
+        reply = "Jam hanya bisa dari 00-23 dan menit hanya bisa dari 00-59"
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply),timeout=10) #reply the same message from user
 
 
 if __name__ == "__main__":
