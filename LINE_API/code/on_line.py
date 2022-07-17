@@ -147,7 +147,7 @@ def handle_text_message(event):
                 time_set = dt.now().replace(hour=hour,minute=minute,second=0)
                 reply = f'time{hour},{minute}'
             except Exception:
-                reply = "Jam hanya bisa dari 00-23 dan menit hanya bisa dari 00-59"
+                reply = "時間は00-23まで、分は00-59までしか設定できません"
         elif in_length == 3:
             inp_date = inp[1].split("-")
             inp_time = inp[2].split(":")
@@ -161,9 +161,9 @@ def handle_text_message(event):
                     minute=int(inp_time[1])
                 time_set = dt(year=year,month=month,day=day,hour=hour,minute=minute)
             except Exception:
-                reply = "Format waktunya dd-mm-yyy, jam hanya bisa dari 00-23, dan menit hanya bisa dari 00-59"
+                reply = "時刻の形式は dd-mm-yyy で、時間は 00-23 まで、分は 00-59 までです"
         else:
-            reply = "Kurang tanggal dan/ jam"
+            reply = "日付/時間の過ぎています"
         
         if time_set is not None:    
             try:
@@ -176,10 +176,10 @@ def handle_text_message(event):
                 alerm_time = time_set.strftime('%Y/%m/%d %H:%M')
                 reply = f'{alerm_time} にアラームが設定されました'
             else:
-                reply = "Alarm tidak berhasil di set karena waktu nya lampau"
+                reply = "時間が経過したため、アラームが正常に設定されませんでした"
     except ValueError:
-        reply = "Jam hanya bisa dari 00-23 dan menit hanya bisa dari 00-59"
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply),timeout=10) #reply the same message from user
+        reply = "時間は00-23まで、分は00-59までしか設定できません"
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply),timeout=10) #返信する
 
 
 if __name__ == "__main__":
