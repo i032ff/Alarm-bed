@@ -2,12 +2,9 @@ import RPi.GPIO as GPIO
 import os
 import sys
 from multiprocessing import Process, Manager
-import time, asyncio
-from datetime import datetime as dt, time as t
+import time
+from datetime import datetime as dt
 # encoding: utf-8
-import requests
-import json
-import jsonpickle
 from argparse import ArgumentParser
 
 from flask import Flask, request, abort
@@ -18,15 +15,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
-    SourceUser, SourceGroup, SourceRoom,
-    TemplateSendMessage, ConfirmTemplate, MessageTemplateAction,
-    ButtonsTemplate, ImageCarouselTemplate, ImageCarouselColumn, URITemplateAction,
-    PostbackTemplateAction, DatetimePickerTemplateAction,
-    CarouselTemplate, CarouselColumn, PostbackEvent,
-    StickerMessage, StickerSendMessage, LocationMessage, LocationSendMessage,
-    ImageMessage, VideoMessage, AudioMessage, FileMessage,
-    UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent
+    MessageEvent, TextMessage, TextSendMessage
 )
 
 app = Flask(__name__)
