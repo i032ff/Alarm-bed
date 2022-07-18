@@ -69,8 +69,9 @@ def watcher(d):
                     item = temp.pop(0)                          
                     db[key] = temp
                     print('設定時間になりました!\n作動中です')
+                    line_bot_api.push_message(key, TextSendMessage(text='設定時間になりました!\n作動中です'))
                     SwitchOn()
-                    line_bot_api.push_message(key, TextSendMessage(text='設定時間になりました!'))
+                    
         except Exception as e:
             print(e)
         time.sleep(3)
