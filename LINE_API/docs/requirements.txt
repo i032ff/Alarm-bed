@@ -1,3 +1,0 @@
-flask
-line-bot-sdk
-# pip3 install -r requirements.txt
