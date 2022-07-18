@@ -1,0 +1,56 @@
+.start {
+    font-size: 20px;
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #f80303;
+    /*ボタン色*/
+    color: #FFF;
+    border-bottom: solid 4px #fe0000;
+    border-radius: 3px;
+    /*線を消す*/
+    outline:none;
+}
+
+.start:active {
+    /*ボタンを押したとき*/
+    -ms-transform: translateY(4px);
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    /*下に動く*/
+    border-bottom: none;
+    
+}
+.stop {
+    font-size: 20px;
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #0352fe;
+    /*ボタン色*/
+    color: #FFF;
+    border-bottom: solid 4px #0051ff;
+    border-radius: 3px;
+    /*線を消す*/
+    outline:none;
+}
+.stop:active {
+    /*ボタンを押したとき*/
+    -ms-transform: translateY(4px);
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    /*下に動く*/
+    border-bottom: none;
+}
+
+.part-img{
+    background-image:url(file://wsl%24/Ubuntu-20.04/home/i046ff/Alarm-bed/pi/work/webiopi/tokei.jpg);  /* 画像のURLを指定       */
+    background-repeat:  no-repeat;                         /* 画像の繰り返しを指定  */              
+    background-position: center;
+  background-size: cover;
+  text-align: center;                            /* 画像のサイズを指定    */
+    width:90%;                                            /* 横幅のサイズを指定    */
+    height:800px;                                       /* 縦幅のサイズを指定    */
+}
+
+
