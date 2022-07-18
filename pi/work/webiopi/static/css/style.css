@@ -1,23 +1,35 @@
-.python {
-    font-size: 20px;
-    display: inline-block;
-    padding: 0.5em 1em;
-    text-decoration: none;
-    background: #668ad8;
-    /*ボタン色*/
-    color: #FFF;
-    border-bottom: solid 4px #627295;
-    border-radius: 3px;
-    /*線を消す*/
-    outline:none;
+.part-img{
+    position: relative;
+    z-index: 1;
+    background-image:url(file://wsl%24/Ubuntu-20.04/home/syunsuga/Alarm-bed/pi/work/webiopi/adDSC_0577.jpg);  /* 画像のURLを指定       */
+    background-repeat:  no-repeat;                         /* 画像の繰り返しを指定  */              
+    background-position:center center;                     /* 画像の表示位置を指定  */
+    background-size:cover;                               /* 画像のサイズを指定    */
+    width:100%;                                            /* 横幅のサイズを指定    */
+    height:900px;                                       /* 縦幅のサイズを指定    */
 }
+.toumei{
+    background-color: rgba(135, 88, 192, 0.507);
+    background-repeat:  no-repeat;                         /* 画像の繰り返しを指定  */              
+    background-position:center center;                     /* 画像の表示位置を指定  */
+    background-size:cover;                               /* 画像のサイズを指定    */
+    width:100%;                                            /* 横幅のサイズを指定    */
+    height:900px;
+}
+h1{
+    text-align: center;
+    line-height: 200px;
+    color: rgb(235, 14, 117);
+    font-size: 50px
+  }
 
-.python:active {
-    /*ボタンを押したとき*/
-    -ms-transform: translateY(4px);
-    -webkit-transform: translateY(4px);
-    transform: translateY(4px);
-    /*下に動く*/
-    border-bottom: none;
-    
-}
+h2{
+    text-align: center;
+    line-height: 200px;
+    color: rgb(9, 9, 16);
+    font-size: 25px
+  }
+.button_wrapper{
+    text-align:center;
+    font-size: 25px
+ }
