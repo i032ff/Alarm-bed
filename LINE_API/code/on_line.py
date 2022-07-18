@@ -37,6 +37,12 @@ handler = WebhookHandler(channel_secret)
 # スイッチON・OFF関数の登録
 SWITCH_PIN = 23
 
+def SwitchoOff():
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(SWITCH_PIN, GPIO.OUT)
+    GPIO.output(SWITCH_PIN, GPIO.LOW)
+    GPIO.cleanup()
+
 def SwitchOn():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(SWITCH_PIN, GPIO.OUT)
@@ -44,15 +50,9 @@ def SwitchOn():
 
     # 30秒後停止
     time.sleep(30)
-    GPIO.output(SWITCH_PIN, GPIO.LOW)
-    # GPIO.cleanup()
+    SwitchoOff()
+    GPIO.cleanup()
 
-
-def SwitchoOff():
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(SWITCH_PIN, GPIO.OUT)
-    GPIO.output(SWITCH_PIN, GPIO.LOW)
-    # GPIO.cleanup()
 
 m = Manager()
 db = m.dict()
