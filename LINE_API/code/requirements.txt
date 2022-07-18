@@ -1,5 +1,2 @@
 line-bot-sdk
 flask
-jsonpickle
-requests
-asyncio
