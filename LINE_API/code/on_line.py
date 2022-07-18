@@ -36,42 +36,42 @@ handler = WebhookHandler(channel_secret)
 
 # スイッチON・OFF関数の登録
 SWITCH_PIN = 23
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(SWITCH_PIN, GPIO.OUT)
+
 
 def SwitchoOff():
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(SWITCH_PIN, GPIO.OUT)
     GPIO.output(SWITCH_PIN, GPIO.LOW)
-    GPIO.cleanup()
+
 
 def SwitchOn():
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(SWITCH_PIN, GPIO.OUT)
     GPIO.output(SWITCH_PIN, GPIO.HIGH)
 
     # 30秒後停止
     time.sleep(30)
     SwitchoOff()
-    GPIO.cleanup()
 
 
 m = Manager()
 db = m.dict()
 
+
 def watcher(d):
     while True:
         try:
-            for key, value in d.items() :
+            for key, value in d.items():
                 future = [date - dt.now() for date in value]
                 future.sort()
 
                 if (len(future) > 0 and future[0].total_seconds()) < 0:
                     temp = db[key]
-                    item = temp.pop(0)                          
+                    item = temp.pop(0)
                     db[key] = temp
                     print('設定時間になりました!\n作動中です')
-                    line_bot_api.push_message(key, TextSendMessage(text='設定時間になりました!\n作動中です'))
+                    line_bot_api.push_message(
+                        key, TextSendMessage(text='設定時間になりました!\n作動中です'))
                     SwitchOn()
-                    
+
         except Exception as e:
             print(e)
         time.sleep(3)
@@ -97,9 +97,8 @@ def callback():
 
 
 @handler.add(MessageEvent, message=TextMessage)
-
 def handle_text_message(event):
-    text = event.message.text #message from user
+    text = event.message.text  # message from user
     reply = ""
 
     # print(event)
@@ -109,21 +108,23 @@ def handle_text_message(event):
 
     # テキストの内容で条件分岐
     if text == '作動':
-        # 作動
-        SwitchOn()
         # 返事
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage('目覚まし作動')
         )
+
+        # 作動
+        SwitchOn()
     elif text == '停止':
-        # 停止
-        SwitchoOff()
         # 返事
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage('目覚まし停止')
         )
+
+        # 停止
+        SwitchoOff()
     elif text == '説明':
         s = '''
         LINEからベッドのクッションを操作できる
@@ -145,8 +146,8 @@ def handle_text_message(event):
         )
 
     else:
-        inp = text.split(" ")   
-        inp.insert(0,event.source.user_id)
+        inp = text.split(" ")
+        inp.insert(0, event.source.user_id)
         # print(inp)
 
         try:
@@ -159,9 +160,9 @@ def handle_text_message(event):
                 try:
                     hour = int(inp_time[0])
                     minute = 0
-                    if len(inp_time) == 2:         
-                        minute=int(inp_time[1])
-                    time_set = dt.now().replace(hour=hour,minute=minute,second=0)
+                    if len(inp_time) == 2:
+                        minute = int(inp_time[1])
+                    time_set = dt.now().replace(hour=hour, minute=minute, second=0)
                     print(inp_time)
                     print(f'time{hour},{minute}')
                     reply = f'time{hour},{minute}'
@@ -169,7 +170,7 @@ def handle_text_message(event):
                 except Exception:
                     reply = event.message.text + "は正しい形式ではありません"
 
-            elif in_length == 3:    #2022-1-1 0:00の形式の場合
+            elif in_length == 3:  # 2022-1-1 0:00の形式の場合
                 inp_date = inp[1].split("-")
                 inp_time = inp[2].split(":")
 
@@ -180,17 +181,18 @@ def handle_text_message(event):
 
                     set_hour = int(inp_time[0])
                     set_minute = 0
-                    if len(inp_time) == 2:         
-                        set_minute=int(inp_time[1])
-                        
-                    time_set = dt(set_year, set_month, set_day, set_hour, set_minute)
+                    if len(inp_time) == 2:
+                        set_minute = int(inp_time[1])
+
+                    time_set = dt(set_year, set_month, set_day,
+                                  set_hour, set_minute)
 
                 except Exception:
                     reply = event.message.text + "は正しい形式ではありません"
 
             else:
                 reply = "日付/時間が過ぎています"
-            
+
             if time_set is not None:
 
                 try:
@@ -212,7 +214,8 @@ def handle_text_message(event):
             # 木霊
             reply = "予約された文字列ではありません\n[" + event.message.text + "]"
 
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply),timeout=10) #返信する
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text=reply), timeout=10)  # 返信する
 
 
 if __name__ == "__main__":
