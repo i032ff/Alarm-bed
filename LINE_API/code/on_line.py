@@ -47,8 +47,8 @@ def SwitchoOff():
 def SwitchOn():
     GPIO.output(SWITCH_PIN, GPIO.HIGH)
 
-    # 30秒後停止
-    time.sleep(30)
+    # 10秒後停止
+    time.sleep(20)
     SwitchoOff()
 
 
