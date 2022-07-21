@@ -4,6 +4,7 @@
 
 [Alerm_bed_最終発表.pdf](./Alerm_bed_%E6%9C%80%E7%B5%82%E7%99%BA%E8%A1%A8.pdf)
 
+Laspberry bedのデモ動画
 
 ![スライド1](https://user-images.githubusercontent.com/68259230/180309271-d4291c55-bd77-4b3a-8ed4-bf763430cab2.PNG)
 ![スライド2](https://user-images.githubusercontent.com/68259230/180309280-e5bc5490-d593-453b-8f74-d5694d5b9cfe.PNG)
