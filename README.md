@@ -2,4 +2,4 @@
 
 スライド
 
-[Alerm_bed_最終発表.pdf](https://github.com/i032ff/Alarm-bed/files/9162493/Alerm_bed_.pdf)
+![Alerm_bed_最終発表.pdf](./Alerm_bed_%E6%9C%80%E7%B5%82%E7%99%BA%E8%A1%A8.pdf)
