@@ -6,7 +6,7 @@
 
 [Laspberry bedのデモ動画](./LINE_API)
 
-[めざまくらのデモ動画](./LINE_API)
+[めざまくらのデモ動画](./pi/work/webiopi)
 
 ![スライド1](https://user-images.githubusercontent.com/68259230/180309271-d4291c55-bd77-4b3a-8ed4-bf763430cab2.PNG)
 ![スライド2](https://user-images.githubusercontent.com/68259230/180309280-e5bc5490-d593-453b-8f74-d5694d5b9cfe.PNG)
